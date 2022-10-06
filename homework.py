@@ -1,10 +1,16 @@
 from dataclasses import dataclass
-from typing import Dict, Type
+from typing import ClassVar, Dict, Type
 
 
 @dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
+    SENTENCE: ClassVar[str] = (
+        'Тип тренировки: {0}; '
+        'Длительность: {1:.3f} ч.; '
+        'Дистанция: {2:.3f} км; '
+        'Ср. скорость: {3:.3f} км/ч; '
+        'Потрачено ккал: {4:.3f}.')
     training_type: str
     duration: float
     distance: float
@@ -12,12 +18,11 @@ class InfoMessage:
     calories: float
 
     def get_message(self) -> str:
-        sentence: str = (f'Тип тренировки: {self.training_type}; '
-                         f'Длительность: {self.duration:.3f} ч.; '
-                         f'Дистанция: {self.distance:.3f} км; '
-                         f'Ср. скорость: {self.speed:.3f} км/ч; '
-                         f'Потрачено ккал: {self.calories:.3f}.')
-        return sentence
+        return self.SENTENCE.format(self.training_type,
+                                    self.duration,
+                                    self.distance,
+                                    self.speed,
+                                    self.calories)
 
 
 class Training:
@@ -41,8 +46,7 @@ class Training:
 
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
-        distance = self.get_distance()
-        return distance / self.duration
+        return self.get_distance() / self.duration
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
@@ -60,20 +64,18 @@ class Training:
 
 class Running(Training):
     """Тренировка: бег."""
-    cal_1: int = 18
-    cal_2: int = 20
+    CAL_1: int = 18
+    CAL_2: int = 20
 
     def get_spent_calories(self) -> float:
-        speed = self.get_mean_speed()
-        time = self.duration * 60
-        M_IN_KM = self.M_IN_KM
-        return (self.cal_1 * speed - self.cal_2) * self.weight / M_IN_KM * time
+        return ((self.CAL_1 * self.get_mean_speed() - self.CAL_2)
+                * self.weight / self.M_IN_KM * self.duration * 60)
 
 
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
-    cal_1: float = 0.035
-    cal_2: float = 0.029
+    CAL_1: float = 0.035
+    CAL_2: float = 0.029
 
     def __init__(self,
                  action: int,
@@ -84,21 +86,16 @@ class SportsWalking(Training):
         self.height = height
 
     def get_spent_calories(self) -> float:
-
-        speed = self.get_mean_speed()
-        time = self.duration * 60
-        height = self.height
-        weight = self.weight
-        cal_1 = self.cal_1
-        cal_2 = self.cal_2
-        return (cal_1 * weight + (speed**2 // height) * cal_2 * weight) * time
+        return ((self.CAL_1 * self.weight
+                + (self.get_mean_speed()**2 // self.height)
+                * self.CAL_2 * self.weight) * (self.duration * 60))
 
 
 class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP: float = 1.38
-    cal_1: float = 1.1
-    cal_2: float = 2
+    CAL_1: float = 1.1
+    CAL_2: float = 2
 
     def __init__(self,
                  action: int,
@@ -111,14 +108,11 @@ class Swimming(Training):
         self.count_pool = count_pool
 
     def get_mean_speed(self) -> float:
-        M_IN_KM = self.M_IN_KM
-        return self.length_pool * self.count_pool / M_IN_KM / self.duration
+        return (self.length_pool * self.count_pool
+                / self.M_IN_KM / self.duration)
 
     def get_spent_calories(self) -> float:
-        speed = self.get_mean_speed()
-        cal_1 = self.cal_1
-        cal_2 = self.cal_2
-        return (speed + cal_1) * cal_2 * self.weight
+        return (self.get_mean_speed() + self.CAL_1) * self.CAL_2 * self.weight
 
 
 def read_package(workout_type: str, data: list) -> Training:
