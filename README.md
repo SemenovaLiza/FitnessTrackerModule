@@ -1,5 +1,5 @@
 # Fitness Tracker Module
-![Pytest](https://img.shields.io/badge/tests-passing-brightgreen?style=flat-square&logo=pytest) ![Python](https://img.shields.io/badge/python-3.11-blue?style=flat-square&logo=python) ![License](https://img.shields.io/badge/license-MIT-purple.svg?style=flat-square) ![Status](https://img.shields.io/badge/status-needs%20refactoring-orange?style=flat-square)
+![Pytest](https://img.shields.io/badge/tests-passing-brightgreen?style=flat-square&logo=pytest) ![Python](https://img.shields.io/badge/python-3.11-blue?style=flat-square&logo=python) ![License](https://img.shields.io/badge/license-MIT-purple.svg?style=flat-square) ![Status](https://img.shields.io/badge/status-finished-green?style=flat-square)
 
 A software module for a fitness tracker that processes and displays results for three types of workouts: running, sport walking, and swimming. My first project :)
  статус разработки (в разработке, на поддержке и т.д.), статус билда, процент покрытия тестами и тд.
