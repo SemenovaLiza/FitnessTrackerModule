@@ -76,6 +76,7 @@ docker-compose exec web python manage.py migrate
 docker-compose exec web python manage.py collectstatic --no-input
 ```
 This project is available at:
+###### *Project currently is not running!*
 http://lizasprojects.ddns.net/api/v1/titles/
 
 ### *Author*
