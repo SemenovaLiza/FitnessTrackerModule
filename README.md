@@ -79,4 +79,4 @@ This project is available at:
 http://lizasprojects.ddns.net/api/v1/titles/
 
 ### *Author*
-Semenova Elizaveta
+Elizaveta Semenova
